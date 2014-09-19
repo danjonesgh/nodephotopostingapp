@@ -35,6 +35,7 @@ mongo.connect(mongoUri, function(err, db) {
     db.collection('posts', function(err, collection) {
       collection.insert({'newkey':'newval'}, function(err, rs) {
         console.log(rs);
+        console.log('started');
       });
     });
   }
