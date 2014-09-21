@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var mongo = require('mongodb').MongoClient;
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -24,7 +23,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 
 var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/hero';
 mongo.connect(mongoUri, function(err, db) {
@@ -33,10 +31,10 @@ mongo.connect(mongoUri, function(err, db) {
     throw err;
   } else {
     db.collection('posts', function(err, collection) {
-      collection.insert({'newkey':'newval'}, function(err, rs) {
-        console.log(rs);
-        console.log('started');
-      });
+      //collection.insert({'newkey':'newval'}, function(err, rs) {
+      //  console.log(rs);
+      //  console.log('started');
+      //});
     });
   }
 });
