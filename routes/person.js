@@ -26,7 +26,7 @@ module.exports.saveperson = function(req, res) {
 
 
 
-	prop.findOne({'type': 'people'}, function(err, p) {
+	prop.find({'type': 'people'}, function(err, p) {
 
 
 		if(err) {

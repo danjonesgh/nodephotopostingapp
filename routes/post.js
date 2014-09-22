@@ -4,7 +4,9 @@ var post = require('./schema').Post;
 
 var getform = function(req, res) {
 		person.getPeople(req, res, function(people) {
+		console.log('post get people');
 		console.log(people);
+		console.log('above post get people');
 		res.render('form', {'people': people});
 	});
 }
