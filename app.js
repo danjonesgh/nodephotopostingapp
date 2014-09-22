@@ -4,10 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var mongoose = require('mongoose');
 var mongo = require('mongodb').MongoClient;
 var routes = require('./routes/index');
-
 var app = express();
 
 // view engine setup
@@ -18,13 +17,29 @@ app.set('view engine', 'ejs');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
+AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+S3_BUCKET = process.env.S3_BUCKET
+
+
 var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/hero';
+mongoose.connect(mongoUri, function(err, result) {
+  if(err) {
+    console.log('error connecting to mongodb with mongoose');
+    console.log(err);
+  } else {
+    console.log('successfully connected to mongodb');
+  }
+})
+
+
+/*
 mongo.connect(mongoUri, function(err, db) {
   if(err) {
     console.log(err);
@@ -38,6 +53,7 @@ mongo.connect(mongoUri, function(err, db) {
     });
   }
 });
+*/
 
 
 // catch 404 and forward to error handler

@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>New Post</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,50 +19,96 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div class="jumbotron">
+      <h1>New Post</h1>
+    </div>
+    <div class="container">
+      <form class="form-horizontal" role="form" method="post" action="addpost" enctype="multipart/form-data">
 
-    <form class="form-horizontal" role="form">
 
-      <div class="form-group">
-        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"> Remember me
-            </label>
+        <div class="form-group">
+          <label for="exampleInputFile" class="col-sm-2 control-label">Picture</label>
+          <div class="col-sm-10">
+            <input type="file" id="files" name="picture">
+            <p class="help-block">Example block-level help text here.</p>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-
-        <textarea class="form-control" rows="3"></textarea>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default">Sign in</button>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputEmail3" placeholder="Title" name="title">
+          </div>
         </div>
-      </div>
 
-    </form>
 
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">Tags</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" rows="3" name="tags"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">People</label>
+          <div class="col-sm-10">
+            <select multiple class="form-control" name="people">
+              <% people.forEach(function(entry) { %>
+                <option><%= entry %></option>
+              <% }); %>
+            </select>
+            <a href="/addperson">
+              <button type="button" class="btn btn-primary">Add new person</button>
+            </a>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <script type="text/javascript" src="/javascripts/s3upload.js"></script>
+    <script type="text/javascript">
+      function s3_upload(){
+          //var status_elem = document.getElementById("status");
+          //var url_elem = document.getElementById("avatar_url");
+          //var preview_elem = document.getElementById("preview");
+          var s3upload = new S3Upload({
+              file_dom_selector: 'files',
+              s3_sign_put_url: '/sign_s3',
+              onProgress: function(percent, message) {
+                  console.log('progress ' + percent + ' msg ' + message);
+                  //status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
+              },
+              onFinishS3Put: function(public_url) {
+                  
+                  console.log('on finish: ' + public_url);
+                  //status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
+                  //url_elem.value = public_url;
+                  //preview_elem.innerHTML = '<img src="'+public_url+'" style="width:300px;" />';
+              },
+              onError: function(status) {
+                  console.log('on error ' + status);
+                  //status_elem.innerHTML = 'Upload error: ' + status;
+              }
+          });
+      }
+      /*
+      * Listen for file selection:
+      */
+      (function() {
+          var input_element = document.getElementById("files");
+          input_element.onchange = s3_upload;
+      })();
+    </script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
