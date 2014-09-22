@@ -6,7 +6,7 @@ module.exports.getform = function(req, res) {
 
 
 module.exports.getPeople = function(req, res, callback) {
-	prop.findOne({'type': 'people'}, function(err, p) {
+	prop.find({'type': 'people'}, function(err, p) {
 		//console.log(p.data);
 		callback(p.data);
 	});
