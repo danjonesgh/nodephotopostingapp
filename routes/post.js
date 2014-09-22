@@ -7,6 +7,7 @@ var getform = function(req, res) {
 		console.log('post get people');
 		console.log(people);
 		console.log('above post get people');
+		people = ['one', 'two'];
 		res.render('form', {'people': people});
 	});
 }
