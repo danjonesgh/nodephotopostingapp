@@ -74,13 +74,14 @@
     </div>
     <script type="text/javascript" src="/javascripts/s3upload.js"></script>
     <script type="text/javascript">
-      function s3_upload(){
+      function s3_upload(filename){
           //var status_elem = document.getElementById("status");
           //var url_elem = document.getElementById("avatar_url");
           //var preview_elem = document.getElementById("preview");
           var s3upload = new S3Upload({
               file_dom_selector: 'files',
               s3_sign_put_url: '/sign_s3',
+              s3_object_name: filename,
               onProgress: function(percent, message) {
                   console.log('progress ' + percent + ' msg ' + message);
                   //status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
@@ -103,7 +104,14 @@
       */
       (function() {
           var input_element = document.getElementById("files");
-          input_element.onchange = s3_upload;
+          input_element.onchange = function() { 
+            console.log('newfile ' + input_element.value);
+            var pieces = this.value.split("\\");
+            var r = new RegExp(' ', 'g');
+            var filename = pieces[pieces.length-1].replace(r, '_');
+            s3_upload(filename);
+          };
+          //input_element.onchange = s3_upload;
       })();
     </script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
