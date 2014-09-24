@@ -21,9 +21,15 @@
     select.form-control {
       height:200px;
     }
-    .bg-danger {
+    .bg-danger,
+    .bg-success,
+    .bg-warning {
       padding:20px;
       margin:20px;
+    }
+    .bg-success,
+    .bg-warning {
+      display:none;
     }
     </style>
   </head>
@@ -38,6 +44,11 @@
 
 
         <p class="bg-danger">**** GUYS. It may take a couple seconds to upload the image to the server.  Wait for it to upload BEFORE submitting the form.  You should get a popup saying the image was finsihed uploading.</p>
+
+        <p class="bg-warning">Your image is uploading...WAIT</p>
+
+        <p class="bg-success" id="success-ribbon">Your image was successfully uploaded.</p>
+
         <div class="form-group">
           <label for="exampleInputFile" class="col-sm-2 control-label">Picture</label>
           <div class="col-sm-10">
@@ -101,7 +112,9 @@
               onFinishS3Put: function(public_url) {
                   
                   console.log('on finish: ' + public_url);
-                  alert('Your image finished uploading!  You may continue submitting this post!');
+                  $(".bg-warning").css("display", "none");
+                  $(".bg-success").css("display", "block");
+                  //alert('Your image finished uploading!  You may continue submitting this post!');
                   //status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
                   //url_elem.value = public_url;
                   //preview_elem.innerHTML = '<img src="'+public_url+'" style="width:300px;" />';
@@ -122,7 +135,8 @@
             var pieces = this.value.split("\\");
             var r = new RegExp(' ', 'g');
             var filename = pieces[pieces.length-1].replace(r, '_');
-            alert('WAIT, wait until the image finished uploading.  You will get another pop-up when the image finishes.');
+            $(".bg-warning").css("display", "block");
+            //alert('WAIT, wait until the image finished uploading.  You will get another pop-up when the image finishes.');
             s3_upload(filename);
           };
           //input_element.onchange = s3_upload;
