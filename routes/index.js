@@ -9,7 +9,11 @@ var person = require('./person');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	res.send('test');
+	post.getPosts(req, res, function(result) {
+    console.log(result);
+    res.render('index', {'posts': result});
+  });
+  //res.send('test');
   //res.render('index');
 });
 
