@@ -46,7 +46,8 @@ router.get('/sign_s3', function(req, res){
 });
 
 router.get('/addpost', function(req, res) {
-	post.getform(req, res);
+  var msg = false;
+	post.getform(req, res, msg);
 });
 
 router.post('/addpost', multipartMiddleware, function(req, res) {

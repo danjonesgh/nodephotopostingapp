@@ -42,7 +42,9 @@
     <a href="/"><button type="button" class="btn btn-info">Go Home</button></a>
       <form class="form-horizontal" role="form" method="post" action="addpost" enctype="multipart/form-data">
 
-
+        <% if(message) { %>
+        <p class="bg-success" id="success-post" style="display:block;">Your post was saved!</p>
+        <% } %>
         <p class="bg-danger">**** GUYS. It may take a couple seconds to upload the image to the server.  Wait for it to upload BEFORE submitting the form.  You should get a popup saying the image was finsihed uploading.</p>
 
         <p class="bg-warning">Your image is uploading...WAIT</p>
@@ -113,7 +115,7 @@
                   
                   console.log('on finish: ' + public_url);
                   $(".bg-warning").css("display", "none");
-                  $(".bg-success").css("display", "block");
+                  $("#success-ribbon").css("display", "block");
                   //alert('Your image finished uploading!  You may continue submitting this post!');
                   //status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
                   //url_elem.value = public_url;
